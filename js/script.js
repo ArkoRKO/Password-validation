@@ -27,7 +27,12 @@ const checkForm = (input) => {
 };
 
 const showPopup = () => {
-	if (pass.value !== '' && pass2.value !== '') {
+	if (
+		pass.value !== '' &&
+		pass2.value !== '' &&
+		email.value !== '' &&
+		username.value !== ''
+	) {
 		popup.classList.add('show-popup');
 	}
 };
@@ -37,11 +42,10 @@ const showPopup = () => {
 
 closePopup.addEventListener('click', (e) => {
 	e.preventDefault();
+	popup.classList.remove('show-popup');
 	[username, pass, pass2, email].forEach((el) => {
 		el.value = '';
 	});
-
-	popup.classList.remove('show-popup');
 });
 
 sendBtn.addEventListener('click', (e) => {
