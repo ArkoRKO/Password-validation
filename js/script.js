@@ -26,21 +26,11 @@ const checkForm = (input) => {
 			showError(el, el.placeholder);
 		} else {
 			clearError(el);
-			showPopup();
 		}
 	});
 };
-
-const showPopup = () => {
-	if (
-		pass.value !== '' &&
-		pass2.value !== '' &&
-		email.value !== '' &&
-		username.value !== ''
-	) {
-		popup.classList.add('show-popup');
-	}
-};
+// argument INPUT z funkcji "checkform" przechowuje tablicę z naszymi inputami
+// argument EL odnosi się do każdej zmiennej, którą umieściliśmy w tablicy
 
 const checkLength = (input, min) => {
 	if (input.value.length < min) {
@@ -58,9 +48,30 @@ const checkPassword = (pass1, pass2) => {
 		showError(pass2, 'Hasła do siebie nie pasują');
 	}
 };
-// argument INPUT z funkcji "checkform" przechowuje tablicę z naszymi inputami
-// argument EL odnosi się do każdej zmiennej, którą umieściliśmy w tablicy
 
+const checkMail = (email) => {
+	const re =
+		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+	if (re.test(email.value)) {
+		clearError(email);
+	} else {
+		showError(email, 'E-mail jest niepoprawny');
+	}
+};
+const checkError = () => {
+	const allInput = document.querySelectorAll('.form-box');
+	let errorCount = 0;
+	allInput.forEach((el) => {
+		if (el.classList.contains('error')) {
+			errorCount++;
+		}
+	});
+
+	if (errorCount === 0) {
+		popup.classList.add('show-popup');
+	}
+};
 closePopup.addEventListener('click', (e) => {
 	e.preventDefault();
 	popup.classList.remove('show-popup');
@@ -71,16 +82,18 @@ closePopup.addEventListener('click', (e) => {
 
 sendBtn.addEventListener('click', (e) => {
 	e.preventDefault();
-
 	checkForm([username, pass, pass2, email]);
 	checkLength(username, 3);
 	checkLength(pass, 8);
 	checkPassword(pass, pass2);
+	checkMail(email);
+	checkError();
 });
 
 clearBtn.addEventListener('click', (e) => {
 	e.preventDefault();
 	[username, pass, pass2, email].forEach((el) => {
 		el.value = '';
+		clearError(el);
 	});
 });
