@@ -72,13 +72,6 @@ const checkError = () => {
 		popup.classList.add('show-popup');
 	}
 };
-closePopup.addEventListener('click', (e) => {
-	e.preventDefault();
-	popup.classList.remove('show-popup');
-	[username, pass, pass2, email].forEach((el) => {
-		el.value = '';
-	});
-});
 
 sendBtn.addEventListener('click', (e) => {
 	e.preventDefault();
