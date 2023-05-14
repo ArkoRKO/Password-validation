@@ -6,6 +6,7 @@ const email = document.querySelector('#email')
 const sendBtn = document.querySelector('.send')
 const clearBtn = document.querySelector('.clear')
 const popup = document.querySelector('.popup')
+const loginForm = document.getElementById('loginForm')
 
 const showError = (input, msg) => {
 	const formBox = input.parentElement
@@ -26,16 +27,23 @@ const checkForm = (input) => {
 }
 
 // argument INPUT z funkcji "checkform" przechowuje tablicę z naszymi inputami
-// argument EL odnosi się do każdej zmiennej, któraą umieściliśmy w tablicy
+// argument EL odnosi się do każdej zmiennej, którą umieściliśmy w tablicy
 
-sendBtn.addEventListener('click', e => {
-	e.preventDefault()
+// loginForm.addEventListener('submit', (e) => {
+// 	e.preventDefault();
+
+// 	checkForm([username, pass, pass2, email])
+// })
+
+sendBtn.addEventListener('click', (e) => {
+	e.preventDefault();
 
 	checkForm([username, pass, pass2, email])
 })
 
 clearBtn.addEventListener('click', (e) => {
-	e.preventDefault()[(username, pass, pass2, email)].forEach((el) => {
+	e.preventDefault();
+	([username, pass, pass2, email]).forEach((el) => {
 		el.value = ''
 	})
 })
